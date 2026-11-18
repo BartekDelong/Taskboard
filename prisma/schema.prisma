@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum TaskStatus {
+  OPEN
+  CLOSED
+}
+
+enum ApplicationStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+model User {
+  id           Int           @id @default(autoincrement())
+  name         String
+  email        String        @unique
+  passwordHash String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  tasks        Task[]
+  applications Application[]
+}
+
+model Task {
+  id           Int           @id @default(autoincrement())
+  title        String
+  description  String
+  budget       Decimal       @db.Decimal(10, 2)
+  status       TaskStatus    @default(OPEN)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  userId       Int
+  user         User          @relation(fields: [userId], references: [id], onDelete: Restrict)
+
+  applications Application[]
+
+  @@index([status, createdAt])
+}
+
+model Application {
+  id        Int               @id @default(autoincrement())
+  message   String
+  status    ApplicationStatus @default(PENDING)
+  createdAt DateTime          @default(now())
+
+  userId    Int
+  user      User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  taskId    Int
+  task      Task              @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, taskId])
+}

@@ -1,0 +1,16 @@
+services:
+  database:
+    image: postgres:17
+    container_name: taskboard-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: taskboard
+      POSTGRES_PASSWORD: taskboard_dev
+      POSTGRES_DB: taskboard
+    ports:
+      - "5432:5432"
+    volumes:
+      - taskboard_data:/var/lib/postgresql/data
+
+volumes:
+  taskboard_data:
