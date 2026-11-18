@@ -7,3 +7,13 @@ Content-Type: application/json
   "email": "test@example.com",
   "password": "SecurePassword123!"
 }
+
+### Register a new user with bad data
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "",
+  "email": "geen-email",
+  "password": "123"
+}
