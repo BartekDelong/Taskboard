@@ -2,6 +2,8 @@
 
 A REST API for a small freelance and task marketplace, built with Node.js and TypeScript.
 
+This is my first time working with Node.js and TypeScript, I'm using this project as practice.
+
 TaskBoard allows users to create accounts, publish tasks and apply to tasks posted by other users. The project is being developed as a portfolio project to explore backend development, REST API design, database management, authentication and software architecture.
 
 ## Tech Stack
